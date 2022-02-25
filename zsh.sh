@@ -4,7 +4,12 @@ function cdls() {
 		cd "$1"
 		if [ "$?" == 0 ]
 		then
+			if [ -e /usr/bin/exa ]
+			then
 				exa
+			else
+				ls
+			fi
 		else
 			if [ -f "$1" ]
 			then
@@ -13,44 +18,11 @@ function cdls() {
 		fi
 	else
 		cd
-		exa
-	fi
-}
-alias cd='cdls'
-
-function encat() {
-	for i in $*
-	do
-		if [ -d "$i" ]
+		if [ -e /usr/bin/exa ]
 		then
-			exa -l "$i"
+			exa
 		else
-			cat "$i"
+			ls
 		fi
-	done
-}
-alias cat='encat'
-
-function g() {
-	g=https://www.google.com/search?q=
-	for i in $*
-	do
-		local g=$g+$i
-	done
-	google-chrome-stable $g
-}
-
-function gam() {
-    git add .
-    git commit -m "$*"
-}
-
-function gamp() {
-    git add .
-    git commit -m "$*"
-	git push
-}
-
-function t() {
-	trans en:zh "$*"
+	fi
 }
